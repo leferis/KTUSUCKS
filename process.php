@@ -30,6 +30,9 @@ class Process {
         else if(isset($_POST['subuppakeista'])){
             $this ->changeSkola();
         }
+        else if (isset($_POST['SendMail'])){
+            $this ->sendMail();
+        }
         /**
          * The only other reason user should be directed here
          * is if he wants to logout, which means user is
@@ -43,6 +46,29 @@ class Process {
          */ else {
             header("Location: index.php");
         }
+    }
+    function sendMail(){
+        global $database,$mailer,$session ;
+        $subuser = $_REQUEST['SendMail'];
+        $q = "SELECT vartotojo_vardas, Destytojo_id "
+            . "FROM " . TBL_SKOLOS . " where id = \" " . $subuser . '"';
+        $result = $database->query($q);
+        echo $q;
+       while( $r = mysqli_fetch_assoc($result)) {
+           $vardas = $r['Destytojo_id'];
+           $vartotojas = $r['vartotojo_vardas'];
+       }
+
+        $q = "SELECT email "
+            . "FROM " . TBL_USERS . " where username = \"" . $vartotojas . '"';
+        $result = $database->query($q);
+         while( $r = mysqli_fetch_assoc($result)) {
+             $r = mysqli_fetch_assoc($result);
+             $emailas = $r['email'];
+         }
+
+        $mailer->sendinvoice($subuser,$emailas,$vardas);
+        header("Location: " . $session->referrer);
     }
     function changeSkola(){
         global $database,$session;

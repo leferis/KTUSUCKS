@@ -24,7 +24,7 @@ function AllUsers()
         $result = $database->query($q);
         /* Display table contents */
         echo "<table align=\"left\" border=\"1\" cellspacing=\"0\" cellpadding=\"3\">\n";
-        echo "<tr><td><b>Studento Vardas</b></td><td><b>Apmoketa</b></td><td><b>Nuo</b></td><td><b>Iki</b></td><td><b>Islaikyta</b></td><td><b>Verte</b></td><td><b>Kiekis</b></td><td><b>Destytojas</b></td><td><b>Pakeisti</b></td></tr>\n";
+        echo "<tr><td><b>Studento Vardas</b></td><td><b>Apmoketa</b></td><td><b>Nuo</b></td><td><b>Iki</b></td><td><b>Islaikyta</b></td><td><b>Verte</b></td><td><b>Kiekis</b></td><td><b>Destytojas</b></td><td><b>Pakeisti</b></td><td><b>Laiškas</b></td></tr>\n";
         while ($r = mysqli_fetch_assoc($result)) {
             $id = $r['Id'];
             $vardas = $r['vartotojo_vardas'];
@@ -64,8 +64,13 @@ function AllUsers()
  <td>' . $destytojas . '</td>
 <td><input type="submit" value="Keisti"></td>
                     </form>
-                   </tr></tr>';
-            echo "<tr><td>$vardas</td><td>$ulevelchange</td>";
+                  ';
+            $but= '<form action="process.php" method="POST">
+                                <input type="hidden" name="SendMail" value="' . $id . '"
+                                <td><input type="submit" value="Siusti"></td>
+                    </form>
+                              </tr></tr>   ';
+            echo "<tr><td>$vardas</td><td>$ulevelchange</td><td>$but</td>";
         }
 
         echo "</table><br>\n";

@@ -2,6 +2,18 @@
 
 class Mailer {
 
+    function sendinvoice($user, $email,$destytojas){
+        $headers = "From: " . EMAIL_FROM_NAME . " <" . EMAIL_FROM_ADDR . ">\r\n";
+        $headers .= "Content-type: text; charset=UTF-8\r\n";
+        $subject = "Int_Tech_Demo - Registracija";
+        $body = $user . ",\n\n"
+            . "Sveiki! Jūsų apmokėjimas gautas už Dėstytojo:  ". $destytojas
+            . "Modulį\n\n";
+        return mail($email, $subject, $body, $headers);
+    }
+    function sendPDF($user, $email){
+
+    }
     /**
      * sendWelcome - Sends a welcome message to the newly
      * registered user, also supplying the username and
